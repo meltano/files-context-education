@@ -1,0 +1,51 @@
+version: datasets/v0.3
+title: "Education: handling the data"
+questions: What care does education data need in the warehouse?
+description: |
+  Education data is about learners, many of them children, and includes some of the most sensitive
+  personal data an organisation can hold. These are general practices for a warehouse holding it.
+  They are not legal, compliance or safeguarding advice: the organisation's data protection officer
+  and designated safeguarding lead decide what applies to it.
+
+  ## Classify the data
+
+  | Class | Examples | Handling |
+  |---|---|---|
+  | Safeguarding and child protection | Concerns, referrals, looked-after status, case notes | **Do not load it into the shared warehouse.** If it must be analysed, keep it in a separate, tightly restricted area with counts only in shared marts |
+  | Special category data | Ethnicity, health, disability and SEN, religion | Restrict access. Use only in aggregate for equality and funding reporting |
+  | Indicators of disadvantage | Free school meals, pupil premium, household income, bursaries | Restrict access and report only in aggregate, with small-number suppression |
+  | Personal data | Name, date of birth, address, contact details, parent and guardian details, photos | Restrict access, mask in non-production and in marts that do not need it |
+  | Education records | Attendance, behaviour, results, exclusions | Restrict to staff with a legitimate educational interest |
+  | Statutory identifiers | UPN, ULN, HUSID, student ID numbers | Mask or tokenise outside the models that need them |
+
+  ## Practices
+
+  - **Least privilege.** Separate raw, staging and mart schemas, and grant raw schemas only to the
+    pipelines and the people who maintain them. In a group of schools, restrict each school's staff
+    to their own school's learners.
+  - **Mask by default.** Hash or mask learner identifiers in shared marts, and give unmasked access by
+    role.
+  - **Suppress small numbers.** Groups of a few learners can identify individuals. Suppress or round
+    counts below an agreed threshold in any published or widely shared report.
+  - **No production data in development** without masking.
+  - **Retention.** Pupil records, exam results and student records have different retention periods
+    (some long, for transcripts and awards). Agree them with the organisation, and model deletion and
+    anonymisation explicitly.
+  - **Data subject requests.** Under GDPR and UK GDPR learners and parents can ask for their data;
+    under FERPA parents and eligible students can inspect and request amendment of education records.
+    Know where each person's data lives.
+
+  ## Rules to be aware of
+
+  Which apply depends on the organisation's country and activities. Common ones:
+
+  - **UK:** UK GDPR and the Data Protection Act 2018; the ICO's Age Appropriate Design Code for online
+    services likely to be used by children; the Department for Education's statutory returns and
+    Keeping Children Safe in Education guidance; Office for Students conditions for HE providers.
+  - **EU:** GDPR, including national rules on the age of consent for online services.
+  - **US:** FERPA (education records), COPPA (online services for children under 13), PPRA, and state
+    student privacy laws.
+  - **Vendors:** LMS, EdTech and assessment providers process learner data on the organisation's
+    behalf; check data processing agreements before loading data from them.
+
+  #education #organisation-context

@@ -1,0 +1,56 @@
+version: datasets/v0.3
+title: "Education: key metrics"
+questions: Which metrics does an education organisation run on, and how is each calculated?
+description: |
+  Standard definitions of the metrics education organisations report. Confirm each one with the
+  data or quality team before building it: statutory definitions differ by country, phase and year,
+  and organisations differ on start-date cut-offs and exclusions.
+
+  ## Attendance
+
+  | Metric | Definition |
+  |---|---|
+  | Attendance rate | Sessions attended ÷ possible sessions. Schools in England count morning and afternoon sessions |
+  | Absence rate | Sessions missed ÷ possible sessions, split into authorised and unauthorised |
+  | Persistent absence | Learners missing 10% or more of possible sessions ÷ all learners (the England schools definition) |
+  | Class attendance (HE/FE) | Sessions attended ÷ sessions timetabled, per module or course |
+
+  ## Recruitment
+
+  | Metric | Definition |
+  |---|---|
+  | Applications | Count of applications in a cycle, by course and entry route |
+  | Offer rate | Offers made ÷ applications decided |
+  | Conversion (yield) | Enrolled learners ÷ offers made, or ÷ firm acceptances. State which |
+  | Enrolment against target | Enrolled learners (or FTE) ÷ planned or funded numbers |
+
+  ## Retention, progression and achievement
+
+  | Metric | Definition |
+  |---|---|
+  | Retention rate | Enrolments completed (not withdrawn) ÷ enrolments started. Exclude early leavers within the funding qualifying period where the statutory measure does |
+  | Achievement rate (FE) | Enrolments achieved ÷ enrolments that ended in the year. Follows the qualification achievement rate (QAR) rules where reported |
+  | Continuation (HE) | Entrants still studying or qualified a set period after starting ÷ entrants |
+  | Progression | Learners who move to the next year or level ÷ learners eligible |
+  | Completion (graduation) rate | Learners who completed their award within a set time (for example 150% of normal time in IPEDS) ÷ the starting cohort |
+  | Pass rate | Assessments passed ÷ assessments attempted. Say whether resits count |
+
+  ## Attainment
+
+  | Metric | Definition |
+  |---|---|
+  | Grade distribution | Share of results at each grade, by subject and cohort |
+  | Value added (progress) | Actual result − result expected from prior attainment (for example Progress 8 for schools in England) |
+  | Good honours | First and upper second class degrees ÷ classified degrees (UK HE) |
+  | Attainment gap | Difference in a measure between groups (for example disadvantaged and other learners) |
+
+  ## Engagement and operations
+
+  | Metric | Definition |
+  |---|---|
+  | LMS engagement | Active learners on a course site in a week ÷ enrolled learners. Define "active" explicitly |
+  | Assignment submission rate | Submissions on time ÷ submissions due |
+  | Student-to-staff ratio | Learner FTE ÷ teaching staff FTE |
+  | Room utilisation | Hours rooms are used ÷ hours available, weighted by occupancy where measured |
+
+  #education #organisation-context

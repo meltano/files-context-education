@@ -1,0 +1,40 @@
+version: datasets/v0.3
+title: "Education: data model"
+questions: What are the core entities of education data, and at what grain should each be modelled?
+description: |
+  The entities most education data reduces to, with the grain and key of each. Use it to map raw
+  source tables onto a consistent model. Names are suggestions; keep the organisation's own terms
+  where they already exist (pupil, student, learner).
+
+  | Entity | Grain (one row per…) | Notes |
+  |---|---|---|
+  | `learner` (pupil, student) | person | Internal ID plus statutory IDs (the UPN for pupils in England, the ULN in FE, a HUSID in UK HE). Never key on name and date of birth |
+  | `academic_period` | academic year, term or semester | Start and end dates, census dates. The reporting calendar |
+  | `course` (programme, qualification) | course version | Qualification aim, level, credits, duration. Versioned: curricula change between years |
+  | `module` (unit, class, section) | module instance per period | The thing taught and timetabled. Sections in US terminology |
+  | `enrolment` | learner per course per period | Start date, expected and actual end date, mode (full or part time), status, completion outcome |
+  | `module_enrolment` | learner per module instance | Credits attempted and earned, final mark and grade |
+  | `session` (timetabled event) | session | Date, time, room, staff member, module |
+  | `attendance_mark` | learner per session | Present, late, authorised or unauthorised absence. Schools record morning and afternoon sessions |
+  | `assessment_result` | learner per assessment | Assessment, mark, grade, attempt number, whether it was a resit |
+  | `award` | award conferred | Qualification, classification or grade, date |
+  | `application` | application | Course applied for, cycle, offer, decision, firm or insurance choice, entry |
+  | `staff` | staff member | Role, contract, FTE. Linked to sessions and modules taught |
+  | `lms_activity` | learner per course site per day | Logins, page views, submissions. Aggregate from raw event logs |
+  | `fee_invoice` / `funding` | invoice or funding line | Tuition fees, sponsor, bursaries, government funding by learner |
+
+  ## Relationships
+
+  - A **learner** has one or more **enrolments** on **courses**, each in an **academic period**.
+  - An enrolment has **module enrolments**, and each module instance has **sessions** and
+    **assessments**.
+  - **Attendance marks** link a learner to a session; **results** link a learner to an assessment.
+  - An **application** becomes an **enrolment** when the applicant accepts and registers.
+
+  ## Status and history
+
+  Enrolment status changes (applied → enrolled → withdrawn, transferred, completed), and statutory
+  reports count it as at fixed census dates. Snapshot enrolments at each census date, and keep the
+  history of status changes with their effective dates.
+
+  #education #organisation-context

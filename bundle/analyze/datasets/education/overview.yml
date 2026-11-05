@@ -1,0 +1,53 @@
+version: datasets/v0.3
+title: "Education: industry overview"
+questions: What does an education organisation's data look like, and where does it come from?
+description: |
+  Industry context for this workspace, for the people and AI assistants working in it. It has no
+  query: it is a briefing to read before modelling or analysing this organisation's data.
+
+  ## Segments
+
+  Education covers organisations that teach, assess and support learners. The segments differ in
+  which entities and metrics matter most:
+
+  - **Schools and school groups (K-12):** maintained schools, academy trusts, independent schools and
+    US school districts. Pupils, classes, attendance, behaviour, assessments and staffing drive the
+    data.
+  - **Further education and colleges:** vocational and adult learning, apprenticeships. Learners,
+    enrolments on courses, funding returns, attendance, retention and achievement drive the data.
+  - **Higher education:** universities. Applicants, students, programmes and modules, credits,
+    progression, completion, outcomes, research income and student finance drive the data.
+  - **Training providers and apprenticeships:** employer-funded and government-funded training.
+    Learners, employers, learning plans, off-the-job hours and end-point assessment drive the data.
+  - **EdTech and online learning:** platforms and course providers. Users, enrolments, content
+    engagement, completion and subscriptions drive the data.
+
+  ## Typical source systems
+
+  | System | Examples | What it holds |
+  |---|---|---|
+  | Student information / management (SIS, MIS) | Schools: Arbor, Bromcom, SIMS, PowerSchool, Infinite Campus. FE and HE: Ellucian Banner, Tribal SITS:Vision, Tribal ebs, Unit4 Student Management, Workday Student | Learners, enrolments, timetables, attendance, assessment results, awards |
+  | Learning management (LMS / VLE) | Canvas, Moodle, Blackboard Learn, D2L Brightspace, Google Classroom | Course sites, activity, submissions, grades |
+  | Admissions and recruitment | UCAS feeds, Common App, Slate, Salesforce Education Cloud | Applicants, applications, offers, conversions |
+  | Assessment and exams | Exam board results files, e-assessment platforms, Turnitin | Entries, marks, grades, similarity reports |
+  | Safeguarding and wellbeing | CPOMS, MyConcern | Concerns, incidents, actions (highly sensitive) |
+  | Timetabling and attendance | The SIS's own modules, Celcat, Scientia | Sessions, rooms, registers |
+  | HR and finance | Workday, Unit4, Agresso, Sage, iTrent, Oracle | Staff, contracts, payroll, budgets |
+  | Apprenticeship and FE tracking | OneFile, Aptem, Bud | Learning plans, evidence, off-the-job hours, progress reviews |
+
+  ## What makes the data different
+
+  - **It runs on the academic year, not the calendar year.** Terms, semesters and academic years
+    (for example August to July in England) define reporting periods, and statutory returns use
+    fixed census dates.
+  - **Enrolment is the core fact, not the person.** A learner can be on several courses, change
+    course, withdraw and re-enrol. Retention, achievement and funding are counted per enrolment.
+  - **Statutory returns set the definitions.** Government returns (the school census, the ILR in FE,
+    the HESA Data Futures return in UK HE, IPEDS in US HE) define many metrics. Match their rules
+    where the organisation reports against them.
+  - **The data is about children and young people.** It includes special category and safeguarding
+    data and needs strict access control. See *Education: handling the data*.
+
+  Related datasets: *data model*, *metrics*, *modelling it in dbt*, *handling the data*.
+
+  #education #organisation-context

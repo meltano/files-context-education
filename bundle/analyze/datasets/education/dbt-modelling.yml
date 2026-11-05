@@ -1,0 +1,65 @@
+version: datasets/v0.3
+title: "Education: modelling it in dbt"
+questions: How should raw education data be modelled in dbt so that it reconciles?
+description: |
+  Conventions for building dbt models on raw education data. They apply on top of the workspace's
+  usual dbt layout: staging, then intermediate, then marts.
+
+  ## Academic calendar
+
+  - **Build a calendar dimension** (`dim_academic_calendar`) with academic year, term or semester,
+    teaching weeks, holidays and census dates per day. Do not derive the academic year from the
+    calendar year with a fixed month: it differs by organisation and sometimes by course.
+  - Name academic years consistently (for example `2025/26`) and store the start and end dates.
+  - Count **possible sessions** from the timetable and the calendar, not from attendance marks alone:
+    a missing mark is not the same as an absence.
+
+  ## Learners and enrolments
+
+  - **Resolve learner identity once.** The SIS, LMS, admissions and exams systems each have their own
+    IDs. Build a `dim_learner` with a crosswalk to each source ID and the statutory IDs, and test it
+    is one-to-one.
+  - **Model at enrolment grain.** Retention and achievement are counted per enrolment; counting per
+    learner double-counts or loses learners on more than one course.
+  - **Treat withdrawals and transfers explicitly.** Keep the withdrawal date and reason, and whether a
+    transfer created a new enrolment. Most retention definitions depend on them.
+  - **Snapshot at census dates.** Use dbt snapshots or the source's history so statutory counts can
+    be reproduced as at each census date.
+
+  ## Results
+
+  - Keep marks and grades in separate columns. Grades are ordered categories (A*–G, 9–1, first to
+    third): map them to an ordinal value in a seed rather than sorting text.
+  - Keep **every attempt** and flag the one that counts (best, latest or capped resit, depending on
+    the regulations).
+
+  ## LMS and event data
+
+  - LMS logs are high volume. Load them incrementally and aggregate to learner per course per day or
+    week in an intermediate model; marts should not scan raw events.
+  - Map LMS course sites to SIS module instances with an explicit mapping table: names and codes
+    rarely match exactly.
+
+  ## Tests
+
+  Add these beside the usual `unique` and `not_null` tests:
+
+  - **Statutory agreement:** enrolment and learner counts agree with the latest submitted return (the
+    school census, ILR or HESA return) for the same period and definition.
+  - **Attendance:** each learner has at most one mark per session; possible sessions ≥ attended.
+  - **Date logic:** enrolment end date ≥ start date; results fall within the enrolment.
+  - **Accepted values** on attendance codes, enrolment statuses and grade scales.
+  - **Freshness** on attendance sources, which are used daily for safeguarding follow-up.
+
+  ## Naming
+
+  - Prefix models by layer (`stg_`, `int_`, `fct_`, `dim_`), and name facts for their grain:
+    `fct_enrolments`, `fct_attendance_marks`, `fct_assessment_results`, `fct_applications`.
+
+  ## Sensitive columns
+
+  Tag personal and special category columns (ethnicity, SEN or disability, free school meals,
+  safeguarding flags) in the model YAML, for example `meta: {pii: true, special_category: true}`,
+  and keep them out of marts that do not need them. See *Education: handling the data*.
+
+  #education #organisation-context
